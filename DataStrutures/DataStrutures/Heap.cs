@@ -37,11 +37,11 @@ public class Heap<T>
         }
 
         item = Items[0];
-        ArrangeDown(ref Items[--Count], 0);
+        HeapifyDown(ref Items[--Count], 0);
         return true;
     }
 
-    private void ArrangeDown(ref T item, int index)
+    private void HeapifyDown(ref T item, int index)
     {
         int right = (index << 1) + 2;
         if (right <= Count)
@@ -52,7 +52,7 @@ public class Heap<T>
                 Items[index] = Items[right];
                 Items[right] = temp;
 
-                ArrangeDown(ref Items[right], right);
+                HeapifyDown(ref Items[right], right);
                 
                 item = Items[index];
             }
@@ -67,7 +67,7 @@ public class Heap<T>
                 Items[index] = Items[left];
                 Items[left] = temp;
 
-                ArrangeDown(ref Items[left], left);
+                HeapifyDown(ref Items[left], left);
             }
         }
     }
@@ -78,11 +78,11 @@ public class Heap<T>
 
         Items[Count] = item;
 
-        ArrangeUp(ref Items[Count], Count);
+        HeapifyUp(ref Items[Count], Count);
         Count++;
     }
 
-    private void ArrangeUp(ref T item, int index)
+    private void HeapifyUp(ref T item, int index)
     {
         int parent = (index - 1) >> 1;
         if (parent < 0)
@@ -97,7 +97,7 @@ public class Heap<T>
         var temp = item;
         item = Items[parent];
         Items[parent] = temp;
-        ArrangeUp(ref Items[parent], parent);
+        HeapifyUp(ref Items[parent], parent);
     }
 
     private void EnsureSpace()
