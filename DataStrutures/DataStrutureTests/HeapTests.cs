@@ -61,7 +61,7 @@ public class HeapTests
 
         while (Heap.TryPop(out var value))
         {
-            Assert.That(value, Is.GreaterThanOrEqualTo(previous));
+            Assert.That(value, Is.GreaterThan(previous));
             previous = value;
         }
         Assert.Pass();
