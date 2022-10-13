@@ -11,7 +11,7 @@ public class HeapNode<T> : IHeap<T>
     private HeapNode<T>? Right;
     private readonly IComparer<T> Comparer;
 
-    public int Count => (Left?.Count ?? 0 + Right?.Count ?? 0) + (HasValue ? 1 : 0);
+    public int Count => (Left?.Count ?? 0) + (Right?.Count ?? 0) + (HasValue ? 1 : 0);
 
     public HeapNode(IComparer<T> comparer)
     {
@@ -39,6 +39,7 @@ public class HeapNode<T> : IHeap<T>
             if (Right is null)
             { 
                 HasValue = false;
+                Value = default;
                 return true;
             }
 
@@ -49,6 +50,7 @@ public class HeapNode<T> : IHeap<T>
             }
 
             HasValue = false;
+            Value = default;
             return true;
         }
 
@@ -61,6 +63,7 @@ public class HeapNode<T> : IHeap<T>
             }
 
             HasValue = false;
+            Value = default;
             return true;
         }
 
@@ -96,8 +99,9 @@ public class HeapNode<T> : IHeap<T>
             return true;
         }
 
-        item = default;
-        return false;
+        Value = default;
+        HasValue = false;
+        return true;
     }
 
     public void Push(T item)
