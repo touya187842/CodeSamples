@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace DataStrutures;
 
-public class Heap<T>
+public class Heap<T> : IHeap<T>
 {
     private T?[] Items;
     private readonly IComparer<T> Comparer;
