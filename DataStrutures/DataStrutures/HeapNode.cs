@@ -126,4 +126,6 @@ public class HeapNode<T> : IHeap<T>
 
         node.Push(item);
     }
+
+    public override string ToString() => $"{{ {nameof(Value)} = {Value}, {nameof(Count)} = {Count} }}";
 }
