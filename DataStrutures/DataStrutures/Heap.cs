@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DataStrutures;
 
 public class Heap<T>
 {
-    private T[] Items;
+    private T?[] Items;
     private readonly IComparer<T> Comparer;
     public int Count { get; private set; }
 
     public Heap(IComparer<T> comparer)
     {
         Comparer = comparer;
-        Items = new T[7];
+        Items = new T?[7];
         Count = 0;
     }
 
@@ -37,37 +38,34 @@ public class Heap<T>
         }
 
         item = Items[0];
-        HeapifyDown(ref Items[--Count], 0);
+        HeapifyDown(Items[--Count]!, 0);
+        Items[Count] = default;
         return true;
     }
 
-    private void HeapifyDown(ref T item, int index)
+    private void HeapifyDown(T item, int index)
     {
         int right = (index << 1) + 2;
         if (right <= Count)
         {
-            if (Comparer.Compare(Items[right], item) < 0)
-            {
-                var temp = item;
-                Items[index] = Items[right];
-                Items[right] = temp;
-
-                HeapifyDown(ref Items[right], right);
-                
-                item = Items[index];
-            }
+            HalfHeapifyDown(ref item, right);
         }
 
         int left = (index << 1) + 1;
         if (left <= Count)
         {
-            if (Comparer.Compare(Items[left], item) < 0)
+            HalfHeapifyDown(ref item, left);
+        }
+
+        Items[index] = item;
+
+        void HalfHeapifyDown(ref T item, int index)
+        {
+            if (Comparer.Compare(Items[index], item) < 0)
             {
                 var temp = item;
-                Items[index] = Items[left];
-                Items[left] = temp;
-
-                HeapifyDown(ref Items[left], left);
+                item = Items[index]!;
+                HeapifyDown(temp, index);
             }
         }
     }
@@ -76,28 +74,26 @@ public class Heap<T>
     {
         EnsureSpace();
 
-        Items[Count] = item;
-
-        HeapifyUp(ref Items[Count], Count);
+        HeapifyUp(item, Count);
         Count++;
     }
 
-    private void HeapifyUp(ref T item, int index)
+    private void HeapifyUp(T item, int index)
     {
         int parent = (index - 1) >> 1;
         if (parent < 0)
         {
+            Items[index] = item;
             return;
         }
 
         if (Comparer.Compare(Items[parent], item) < 0)
         {
+            Items[index] = item;
             return;
         }
-        var temp = item;
-        item = Items[parent];
-        Items[parent] = temp;
-        HeapifyUp(ref Items[parent], parent);
+        Items[index] = Items[parent];
+        HeapifyUp(item, parent);
     }
 
     private void EnsureSpace()
