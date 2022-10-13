@@ -4,24 +4,22 @@ using System;
 
 namespace DataStrutureTests;
 
-[TestFixture(8)]
-[TestFixture(100)]
-
+[TestFixtureSource(typeof(HeapTestsSource), nameof(HeapTestsSource.HeapWithRefObjTestsArgs))]
 public class HeapWithRefObjTests
 {
-    private Heap<Foo> Heap;
+    private IHeap<Foo> Heap;
     private Foo[] Samples;
     private readonly int Count;
 
-    public HeapWithRefObjTests(int count)
+    public HeapWithRefObjTests(IHeap<Foo> heap, int count)
     {
+        Heap = heap;
         Count = count;
     }
 
     [SetUp]
     public void Setup()
     {
-        Heap = new Heap<Foo>(new FooComparer());
         Samples = new Foo[Count];
 
         for (int i = 0; i < Samples.Length; i++)

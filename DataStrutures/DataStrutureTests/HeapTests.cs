@@ -1,26 +1,24 @@
 using DataStrutures;
 using System;
-using System.Collections.Generic;
 
 namespace DataStrutureTests;
 
-[TestFixture(8)]
-[TestFixture(100)]
+[TestFixtureSource(typeof(HeapTestsSource),nameof(HeapTestsSource.HeapTestsArgs))]
 public class HeapTests
 {
-    private Heap<int> Heap;
+    private IHeap<int> Heap;
     private int[] Samples;
     private readonly int Count;
 
-    public HeapTests(int count)
+    public HeapTests(IHeap<int> heap, int count)
     {
+        Heap = heap;
         Count = count;
     }
 
     [SetUp]
     public void Setup()
     {
-        Heap = new Heap<int>(Comparer<int>.Default);
         Samples = new int[Count];
 
         for (int i = 0; i < Samples.Length; i++)
