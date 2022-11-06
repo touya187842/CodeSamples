@@ -1,3 +1,5 @@
+use std::pin::Pin;
+
 fn logic_join(left: Option<i32>, right: Option<i32>) {
     // 當兩者皆 Some, 回傳 right (and 內的值)
     left.and(right);
