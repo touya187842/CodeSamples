@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TUnit" Version="0.1.928" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestServerAndTUnit\TestServerAndTUnit.csproj" />
+  </ItemGroup>
+
+</Project>
